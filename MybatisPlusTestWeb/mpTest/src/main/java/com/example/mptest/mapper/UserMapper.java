@@ -7,10 +7,11 @@ import com.example.mptest.pojo.vo.UserVO;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
+import java.util.Collection;
 import java.util.List;
 
 @Mapper
-public interface UserMapper extends BaseMapper<User> {
+public interface UserMapper extends EasyBaseMapper<User> {
     void bathSaveHandWrite(List<User> users);
 
     void batchSave(List<User> users);
@@ -21,4 +22,5 @@ public interface UserMapper extends BaseMapper<User> {
      多条件分页
      */
     List<UserVO> pageByParams(IPage<UserVO> page, int id, String name);
+
 }
