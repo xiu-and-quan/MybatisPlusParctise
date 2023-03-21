@@ -212,4 +212,24 @@ public class MpTestApplicationTests {
         }
     }
 
+    @Test
+    public void selectInSetTest(){
+        Set<Integer> ids = new HashSet<>();
+        for (int i = 1; i < 6; i++) {
+            ids.add(i);
+        }
+        List<User> userList = userService.selectInSet(ids);
+        userList.forEach(System.out::println);
+    }
+
+    @Test
+    public void mysqlInSetTest(){
+        Set<Integer> ids = new HashSet<>();
+        for (int i = 1; i < 6; i++) {
+            ids.add(i);
+        }
+        List<User> userList = userMapper.mysqlInSet(ids);
+        userList.forEach(System.out::println);
+    }
+
 }
