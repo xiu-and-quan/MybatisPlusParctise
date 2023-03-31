@@ -6,16 +6,19 @@
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
+        <module name="openFeignWeb" />
         <module name="mpTest" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
       <module name="mpTest" target="1.8" />
+      <module name="openFeignWeb" target="1.8" />
     </bytecodeTargetLevel>
   </component>
   <component name="JavacSettings">
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">
       <module name="mpTest" options="-parameters" />
+      <module name="openFeignWeb" options="-parameters" />
     </option>
   </component>
 </project>

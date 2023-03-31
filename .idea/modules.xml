@@ -2,8 +2,9 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/.idea/MybatisPlusParctise.iml" filepath="$PROJECT_DIR$/.idea/MybatisPlusParctise.iml" />
-      <module fileurl="file://$PROJECT_DIR$/MybatisPlusTestWeb/mpTest/mpTest.iml" filepath="$PROJECT_DIR$/MybatisPlusTestWeb/mpTest/mpTest.iml" />
+      <module fileurl="file://$PROJECT_DIR$/microservices.iml" filepath="$PROJECT_DIR$/microservices.iml" />
+      <module fileurl="file://$PROJECT_DIR$/payment_consume_one.iml" filepath="$PROJECT_DIR$/payment_consume_one.iml" />
+      <module fileurl="file://$PROJECT_DIR$/payment_provide_one.iml" filepath="$PROJECT_DIR$/payment_provide_one.iml" />
     </modules>
   </component>
 </project>
