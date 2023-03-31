@@ -1,0 +1,4 @@
+com\example\openfeignweb\pojo\dto\OpenFeignDTO.class
+com\example\openfeignweb\openfeign\OpenfeignService.class
+com\example\openfeignweb\OpenFeignWebApplication.class
+com\example\openfeignweb\controller\OpenFeignController.class

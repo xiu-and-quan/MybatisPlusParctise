@@ -1,0 +1,95 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<!DOCTYPE mapper PUBLIC
+        "-//mybatis.org//DTD com.example.Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.mptest.mapper.UserMapper">
+        <insert id="batchSave" parameterType="com.example.mptest.entity.User">
+            insert into user(id,name)
+            values
+                <foreach collection="list" item="item" index="index" separator=",">
+                    (#{item.id},#{item.name})
+                </foreach>
+        </insert>
+    <select id="selectByIdAndName" resultType="com.example.mptest.entity.User">
+        select * from user
+        <where>
+            id = #{id}
+            and name = #{name}
+        </where>
+    </select>
+
+    <resultMap id="userVoMap" type="com.example.mptest.pojo.vo.UserVO">
+        <id column="id" property="userId"></id>
+        <result column="name" property="userName"></result>
+    </resultMap>
+    <!--多条件分页-->
+    <select id="pageByParams" resultMap="userVoMap">
+        select u.id,u.name from user u where u.id = #{id} and u.name = #{name}
+    </select>
+
+    <!-- 小于等于-->
+    <select id="selectLessAndEq" resultType="com.example.mptest.entity.User">
+        SELECT *
+        FROM user u
+        WHERE u.id <![CDATA[ <= ]]> #{id}
+    </select>
+
+    <select id="mysqlInSet" resultType="com.example.mptest.entity.User">
+        SELECT *
+        FROM user u
+        WHERE u.id in
+        <foreach collection="collection" index="index"  item="item" open="(" separator="," close=")">
+            #{item}
+        </foreach>
+    </select>
+
+    <resultMap id="UserAndSchoolVOMap" type="com.example.mptest.pojo.vo.UserAndSchoolVO">
+        <id column="id" property="id"></id>
+        <result column="name" property="name"></result>
+        <result column="school_name" property="schoolName"></result>
+    </resultMap>
+    <select id="subQuery" resultType="com.example.mptest.entity.User">
+        SELECT * FROM user u WHERE u.id = (SELECT s.school_id FROM school s WHERE s.school_name = '峰城大学')
+    </select>
+
+    <select id="queryByClass" resultType="com.example.mptest.entity.User">
+        SELECT * FROM user u 
+        <where>
+            <if test="id != null and id != ''">
+                u.id = #{id} LIMIT 0,1
+            </if>
+        </where>
+    </select>
+
+    <!--参数为类，并且属性是List集合-->
+    <select id="queryByClaaContainsList" resultType="com.example.mptest.entity.User">
+        select * from user u where u.name = #{name}
+        or u.id in
+        <foreach collection="ids" index="index"  item="item" open="(" separator="," close=")">
+            #{item}
+        </foreach>
+    </select>
+
+    <!--返回值映射-->
+    <select id="selecyMap" resultType="com.example.mptest.pojo.vo.UserVO">
+        select * from user
+        <where>
+            <if test="id != null and id != ' '">
+                id = #{id}
+            </if>
+        </where>
+    </select>
+
+    <!--插入默认生成主键-->
+    <insert id="inserBySnowFlower" parameterType="com.example.mptest.entity.User">
+    insert into user(name)
+    values(#{name})
+    </insert>
+
+    <!--重载selectPage-->
+    <select id="selectPage" resultType="com.example.mptest.entity.User">
+        select * from user
+    </select>
+</mapper>
+
+
