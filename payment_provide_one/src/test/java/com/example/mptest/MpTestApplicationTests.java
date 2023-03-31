@@ -2,7 +2,6 @@ package com.example.mptest;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper;
-import com.baomidou.mybatisplus.core.toolkit.IdWorker;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.example.mptest.controller.UserController;
@@ -11,22 +10,17 @@ import com.example.mptest.enums.ChecklistStatusEnums;
 import com.example.mptest.mapper.UserMapper;
 import com.example.mptest.pojo.dto.UserListDTO;
 import com.example.mptest.pojo.dto.UserString;
-import com.example.mptest.pojo.problemAboutExtends.Animal;
-import com.example.mptest.pojo.problemAboutExtends.Dog;
 import com.example.mptest.pojo.vo.UserVO;
 import com.example.mptest.service.UserService;
 import com.example.mptest.until.BeanObjectCopyUtils;
-import org.checkerframework.checker.units.qual.A;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.cglib.beans.BeanCopier;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import java.util.*;
-import java.util.concurrent.TimeUnit;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
@@ -87,7 +81,7 @@ public class MpTestApplicationTests {
         List<UserVO> res = userMapper.pageByParams(new Page<UserVO>(0, 2), 3, "xiu");
         System.out.println(res);
     }
-    
+
     //queryWrapper分页
     @Test
     public void testPageQueryWrapper(){

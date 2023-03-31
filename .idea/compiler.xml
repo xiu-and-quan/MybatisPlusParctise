@@ -1,24 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="CompilerConfiguration">
-    <annotationProcessing>
-      <profile name="Maven default annotation processors profile" enabled="true">
-        <sourceOutputDir name="target/generated-sources/annotations" />
-        <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
-        <outputRelativeToContentRoot value="true" />
-        <module name="openFeignWeb" />
-        <module name="mpTest" />
-      </profile>
-    </annotationProcessing>
+    <excludeFromCompile>
+      <directory url="file://$PROJECT_DIR$/src/main/resources/archetype-resources" includeSubdirectories="true" />
+      <directory url="file://$PROJECT_DIR$/payment_provide_one/src/main/resources/archetype-resources" includeSubdirectories="true" />
+    </excludeFromCompile>
     <bytecodeTargetLevel>
-      <module name="mpTest" target="1.8" />
-      <module name="openFeignWeb" target="1.8" />
+      <module name="microservices" target="1.8" />
+      <module name="payment_consume_one" target="1.8" />
+      <module name="payment_provide_one" target="1.8" />
     </bytecodeTargetLevel>
-  </component>
-  <component name="JavacSettings">
-    <option name="ADDITIONAL_OPTIONS_OVERRIDE">
-      <module name="mpTest" options="-parameters" />
-      <module name="openFeignWeb" options="-parameters" />
-    </option>
   </component>
 </project>
