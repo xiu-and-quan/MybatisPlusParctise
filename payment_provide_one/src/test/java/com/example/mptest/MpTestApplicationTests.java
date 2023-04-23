@@ -7,12 +7,13 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.example.mptest.controller.UserController;
 import com.example.mptest.entity.User;
 import com.example.mptest.enums.ChecklistStatusEnums;
+import com.example.mptest.enums.Month;
+import com.example.mptest.enums.Weekday;
 import com.example.mptest.mapper.UserMapper;
 import com.example.mptest.pojo.dto.UserListDTO;
-import com.example.mptest.pojo.dto.UserString;
 import com.example.mptest.pojo.vo.UserVO;
 import com.example.mptest.service.UserService;
-import com.example.mptest.until.BeanObjectCopyUtils;
+import com.example.mptest.until.BatchInsertUtil;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.BeanUtils;
@@ -45,7 +46,7 @@ public class MpTestApplicationTests {
     }
 
     //批量插入
-    @Test
+    /*@Test
     public void testBatchInsert(){
         User u1 = new User();
         u1.setName("xiu");
@@ -55,7 +56,7 @@ public class MpTestApplicationTests {
         users.add(u1);
         users.add(u2);
         userMapper.batchSave(users);
-    }
+    }*/
 
     //批量删除
     @Test
@@ -102,10 +103,10 @@ public class MpTestApplicationTests {
     }
 
     //百万数据插入
-    @Test
+    /*@Test
     public void saveBatchTest(){
         userService.InsertUsers();
-    }
+    }*/
 
     //Comparable
     @Test
@@ -245,7 +246,7 @@ public class MpTestApplicationTests {
         res.forEach(System.out::println);
     }
 
-    @Test
+    /*@Test
     public void extendsTest(){
         User user = new User();
         UserString userString = new UserString();
@@ -253,30 +254,146 @@ public class MpTestApplicationTests {
         user.setName("xiu");
         BeanObjectCopyUtils.copyObject(userString,user);
         System.out.println(userString);
-    }
+    }*/
 
-    @Test
+    /*@Test
     public void selecyMapTest(){
         User user = new User();
         user.setId(new Long(1));
         List<UserVO> res = userMapper.selecyMap(user);
         res.forEach(System.out::println);
-    }
+    }*/
 
     //雪花算法生成主键
-    @Test
+    /*@Test
     public void reducePrimaryBySnowFlower(){
         User user = new User();
         user.setName("xiu");
         System.out.println(user.getId());
         userMapper.insert(user);
         System.out.println(user.getId());
-    }
+    }*/
 
     @Test
     public void selectPageTest(){
-        List<User> data = userMapper.selectPage(new Long(1));
+        Page<User> page = new Page(0,3);
+        List<User> data = userMapper.selectPage(page,new Long(1));
         data.forEach(System.out::println);
+    }
+
+    @Autowired
+    private BatchInsertUtil batchInsert;
+
+    /**
+     * 批量插入
+     */
+    @Test
+    public void saveBatchTestByUntil() {
+        List<User> users = new ArrayList<>();
+        for (int i = 0; i < 20; i++) {
+            users.add(User.builder().name("quan"+i).build());
+        }
+        long stime = System.currentTimeMillis();
+        // 执行时间（1s）
+        batchInsert.batchSava(users);
+        // 结束时间
+        long etime = System.currentTimeMillis();
+        // 计算执行时间
+        System.out.printf("执行时长：%d 毫秒.", (etime - stime));
+        //1万 9317毫秒
+        //10万
+    }
+
+    /**
+     * for循环插入
+     */
+    @Test
+    public void forInsertTest(){
+        List<User> users = new ArrayList<>();
+        for (int i = 0; i < 100000; i++) {
+            users.add(User.builder().name("quan"+i).build());
+        }
+        long stime = System.currentTimeMillis();
+        // 执行时间（1s）
+        for (User u:
+             users) {
+            userMapper.insert(u);
+        }
+        // 结束时间
+        long etime = System.currentTimeMillis();
+        // 计算执行时间
+        System.out.printf("执行时长：%d 毫秒.", (etime - stime));
+        //1万 12925 毫秒
+        //10万 125415
+    }
+
+    /**
+     * 动态sql语句插入
+     */
+    @Test
+    public void insetForEachxmlTest(){
+        List<User> users = new ArrayList<>();
+        for (int i = 0; i < 100000; i++) {
+            users.add(User.builder().name("quan"+i).build());
+        }
+        long stime = System.currentTimeMillis();
+        // 执行时间（1s）
+        userMapper.batchSave(users);
+        // 结束时间
+        long etime = System.currentTimeMillis();
+        // 计算执行时间
+        System.out.printf("执行时长：%d 毫秒.", (etime - stime));
+        //1万442 毫秒
+        //10万 奔溃
+    }
+
+    @Test
+    public void orInQueryWrapperTest(){
+        QueryWrapper<User> queryWrapper = Wrappers.query();
+        queryWrapper.lambda().eq(User::getName,"quan2").or().eq(User::getName,"quan1").eq(User::getId,"1641709211698122755");
+        List<User> res = userMapper.selectList(queryWrapper);
+        res.forEach(System.out::println);
+    }
+
+    /**
+     * 枚举类的使用
+     */
+    @Test
+    public void enumWeekTest(){
+        Weekday monday = Weekday.MONDAY;
+        Weekday tuesday = Weekday.TUESDAY;
+
+        System.out.println("Monday is " + monday.getValue());
+        System.out.println("Tuesday is " + tuesday.getValue());
+    }
+
+    /**
+     * QueryWrapper.select返回指定字段用自定义类接收
+     */
+    @Test
+    public void queryWrapperSelectest(){
+        User res = userMapper.selectById(new Long("1641709211576487938"));
+        System.out.println(res);
+    }
+
+    /**
+     * set可以设置null吗
+     */
+    @Test
+    public void setNullTest(){
+        String name = null;
+        User user = User.builder().name("xiu").build();
+        user.setName(name);
+        System.out.println(user.getName());
+    }
+
+    /**
+     * 测试枚举类类型
+     */
+    @Test
+    public void enumClassTest(){
+        Month december = Month.DECEMBER;
+        System.out.println(december);
     }
 
 }

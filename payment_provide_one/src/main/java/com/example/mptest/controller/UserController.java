@@ -1,5 +1,6 @@
 package com.example.mptest.controller;
 
+import com.alibaba.fastjson.JSON;
 import com.example.mptest.entity.User;
 import com.example.mptest.mapper.UserMapper;
 import com.example.mptest.pojo.dto.OpenFeignDTO;
@@ -11,6 +12,7 @@ import com.fasterxml.jackson.databind.util.BeanUtil;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.relational.core.sql.In;
+import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
@@ -59,5 +61,17 @@ public class UserController {
     void insert(@RequestBody User user){
         //User user = BeanObjectCopyUtils.copyObject(new User(),userDTO);
         userMapper.inserBySnowFlower(user);
+    }
+
+    @Autowired
+    KafkaTemplate<String, String> kafka;
+
+    @PostMapping("/register")
+    public String register(@RequestBody User user) {
+        String message = JSON.toJSONString(user);
+        System.out.println("接收到用户信息：" + message);
+        kafka.send("register", message);
+        //kafka.send(String topic, @Nullable V data) {
+        return "OK";
     }
 }

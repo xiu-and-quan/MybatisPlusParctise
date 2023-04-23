@@ -18,20 +18,19 @@ public class UserService {
     @Resource
     private UserMapper userMapper;
 
-    public void InsertUsers(){
+    /*public void InsertUsers(){
         long start = System.currentTimeMillis();
         List<User> userList = new ArrayList<>();
         User user;
         for(int i = 1 ;i < 10; i++) {
             user = new User();
-            user.setId((long) i);
             user.setName("xiu"+i);
             userList.add(user);
         }
-//        userMapper.insertBatchSomeColumn(userList);
+        userMapper.insertBatchSomeColumn(userList);
         long end = System.currentTimeMillis();
         System.out.println("一万条数据总耗时：" + (end-start) + "ms" );
-    }
+    }*/
 
     public List<User> selectIn(List<Integer> ids){
         QueryWrapper<User> queryWrapper = new QueryWrapper<>();
