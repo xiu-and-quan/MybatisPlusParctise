@@ -1,0 +1,2 @@
+imageDubbo = com.example.impl.ImageSPIImpl
+textDubbo = com.example.impl.TestSPIImpl

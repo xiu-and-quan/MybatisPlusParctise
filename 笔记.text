@@ -1,0 +1,3 @@
+SPI原理：策略模式
+1、ServiceLoader有属性 PREFIX = "META-INF/services/"用来查找配置文件的目录
+2、接口也有class对象

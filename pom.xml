@@ -17,6 +17,7 @@
     <modules>
         <module>payment_provide_one</module>
         <module>payment_consume_one</module>
+        <module>spiLearning</module>
     </modules>
 
 </project>

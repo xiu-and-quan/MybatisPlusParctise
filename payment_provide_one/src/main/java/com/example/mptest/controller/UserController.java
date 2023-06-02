@@ -2,6 +2,7 @@ package com.example.mptest.controller;
 
 import com.example.mptest.entity.User;
 import com.example.mptest.mapper.UserMapper;
+import com.example.mptest.pojo.dto.AbstractSubClassParamDTO;
 import com.example.mptest.pojo.dto.OpenFeignDTO;
 import com.example.mptest.pojo.dto.UserDTO;
 import com.example.mptest.pojo.vo.UserVO;
@@ -59,5 +60,11 @@ public class UserController {
     void insert(@RequestBody User user){
         //User user = BeanObjectCopyUtils.copyObject(new User(),userDTO);
         userMapper.inserBySnowFlower(user);
+    }
+
+    @PostMapping("/testAbstractParam")
+    void testAbstractParam(@RequestBody AbstractSubClassParamDTO body){
+        System.out.println(body.getId());
+        System.out.println(body.getName());
     }
 }

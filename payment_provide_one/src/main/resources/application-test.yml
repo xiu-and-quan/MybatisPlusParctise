@@ -1,0 +1,20 @@
+spring:
+ profiles:
+  active: poc
+ application:
+  name: payment-provide-one
+ datasource:
+  url: jdbc:mysql://localhost/testMP?useUnicode=true&characterEncoding=utf8
+  username: root
+  password: 123
+  driver-class-name: com.mysql.jdbc.Driver
+ cloud:
+  nacos:
+   discovery:
+    server-addr: 10.74.151.33:8848
+mybatis-plus:
+ mapper-locations: classpath:/mapper/*.xml
+ configuration:
+  log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+
+

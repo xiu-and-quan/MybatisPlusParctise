@@ -9,6 +9,7 @@ import com.example.mptest.controller.UserController;
 import com.example.mptest.entity.User;
 import com.example.mptest.enums.ChecklistStatusEnums;
 import com.example.mptest.mapper.UserMapper;
+import com.example.mptest.pojo.dto.TestDTO;
 import com.example.mptest.pojo.dto.UserListDTO;
 import com.example.mptest.pojo.dto.UserString;
 import com.example.mptest.pojo.problemAboutExtends.Animal;
@@ -21,6 +22,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.cglib.beans.BeanCopier;
 import org.springframework.test.context.junit4.SpringRunner;
@@ -283,6 +285,33 @@ public class MpTestApplicationTests {
     public void selectPageTest(){
         List<User> data = userMapper.selectPage(new Long(1));
         data.forEach(System.out::println);
+    }
+
+    @Test
+    public void removeIterator() {
+        List<TestDTO> users = new ArrayList<>();
+        users.add(new TestDTO(1,"xiu","N"));
+        users.add(new TestDTO(1,"xiu"));
+        users.add(new TestDTO(1,"xiu"));
+        Iterator<TestDTO> iterator = users.iterator();
+        while (iterator.hasNext()){
+            if ("N".equals(iterator.next().state)) {
+                iterator.remove();
+            }
+        }
+        System.out.println(users.size());
+    }
+
+    @Value("${test.type}")
+    boolean type1;
+
+    @Test
+    public void valueTest() {
+        if (type1) {
+            System.out.println(true);
+        }else {
+            System.out.println(false);
+        }
     }
 
 }
