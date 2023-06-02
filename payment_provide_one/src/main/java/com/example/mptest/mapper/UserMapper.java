@@ -43,5 +43,5 @@ public interface UserMapper extends EasyBaseMapper<User> {
     void inserBySnowFlower(User user);
 
     /** selectPage()重载 **/
-    List<User> selectPage(Long id);
+    List<User> selectPage(IPage<User> iPage,Long id);
 }

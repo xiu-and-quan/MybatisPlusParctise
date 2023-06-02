@@ -11,8 +11,6 @@ import static com.baomidou.mybatisplus.annotation.IdType.ID_WORKER;
 @Data
 @TableName("user")
 @Builder
-@AllArgsConstructor
-@NoArgsConstructor
 public class User {
 
     @TableId(value = "id")
